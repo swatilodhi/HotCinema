@@ -3,23 +3,28 @@ import React, { useState, useEffect } from 'react';
 import Card from '../Component/Card';
 import useFetch from '../hook/useFetch';
 import  {useSearchParams} from 'react-router-dom';
+import PageContext from '../Page_context/PageContext.jsx';
+import { useContext } from 'react';
+
 const Search = ({apiPath,title}) => {
-  const [currentPage, setCurrentPage] = useState(1);
+  const { page, setPage } = useContext(PageContext);
+
+  // const [currentPage, setCurrentPage] = useState(1);
   const [searchparam]=useSearchParams();
    const queryTerm=searchparam.get("q");
     console.log("qw",queryTerm)
-   const {data:movies,totalPages }=useFetch({apiPath,currentPage,queryTerm});
+   const {data:movies,totalPages }=useFetch({apiPath,page,queryTerm});
      useEffect(() => {
   
-    setCurrentPage(1);
+    setPage(1);
   }, [apiPath]);
   
   const handleNextPage = () => {
-    setCurrentPage((prevPage) => prevPage + 1);
+    setPage((prevPage) => prevPage + 1);
   };
 
   const handlePrevPage = () => {
-    setCurrentPage((prevPage) => prevPage - 1);
+    setPage((prevPage) => prevPage - 1);
   };
   useEffect(()=>{
     document.title=`${title}`;
@@ -43,15 +48,15 @@ const Search = ({apiPath,title}) => {
         <button
           className='mx-2 px-4 py-2 bg-blue-500 text-white rounded-md'
           onClick={handlePrevPage}
-          disabled={currentPage === 1}
+          disabled={page === 1}
         >
           Prev
         </button>
-        <span className='mx-2'>Page {currentPage} of {totalPages}</span>
+        <span className='mx-2'>Page {page} of {totalPages}</span>
         <button
           className='mx-2 px-4 py-2 bg-blue-500 text-white rounded-md'
           onClick={handleNextPage}
-          disabled={currentPage === totalPages}
+          disabled={page === totalPages}
         >
           Next
         </button>

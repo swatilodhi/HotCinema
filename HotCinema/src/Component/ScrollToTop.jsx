@@ -1,8 +1,11 @@
 import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
+import { useContext } from 'react';
+import PageContext from '../Page_context/PageContext.jsx';
 
 export function ScrollToTop() {
   const { pathname } = useLocation();
+  const { page } = useContext(PageContext);
 
   useEffect(() => {
     const scrollToTop = () => {
@@ -22,7 +25,7 @@ export function ScrollToTop() {
     return () => {
       window.removeEventListener("beforeunload", handleBeforeUnload); // Cleanup beforeunload listener
     };
-  }, [pathname]);
+  }, [pathname,page]);
 
   return null;
 }

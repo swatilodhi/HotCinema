@@ -1,28 +1,29 @@
 import React, { useState, useEffect } from 'react';
 import Card from '../Component/Card';
 import useFetch from '../hook/useFetch';
-
-
+import PageContext from '../Page_context/PageContext.jsx';
+import { useContext } from 'react';
 
 const Movielist = ({apiPath,title}) => {
+  const { page, setPage } = useContext(PageContext);
 
-  const [currentPage, setCurrentPage] = useState(1);
-   const {data:movies,totalPages }=useFetch({apiPath,currentPage});
+  // const [currentPage, setCurrentPage] = useState(1);
+   const {data:movies,totalPages }=useFetch({apiPath,page});
    useEffect(()=>{
     document.title=`${title}`;
   },[title]);
  
   useEffect(() => {
   
-    setCurrentPage(1);
+    setPage(1);
   }, [apiPath]);
   
   const handleNextPage = () => {
-    setCurrentPage((prevPage) => prevPage + 1);
+    setPage((prevPage) => prevPage + 1);
   };
 
   const handlePrevPage = () => {
-    setCurrentPage((prevPage) => prevPage - 1);
+    setPage((prevPage) => prevPage - 1);
   };
 
   return (
@@ -40,15 +41,15 @@ const Movielist = ({apiPath,title}) => {
         <button
           className='mx-2 px-4 py-2 bg-blue-500 text-white rounded-md'
           onClick={handlePrevPage}
-          disabled={currentPage === 1}
+          disabled={page === 1}
         >
           Prev
         </button>
-        <span className='mx-2 dark:text-white leading-10'>Page {currentPage} of {totalPages}</span>
+        <span className='mx-2 dark:text-white leading-10'>Page {page} of {totalPages}</span>
         <button
           className='mx-2 px-4 py-2 bg-blue-500 text-white rounded-md'
           onClick={handleNextPage}
-          disabled={currentPage === totalPages}
+          disabled={page === totalPages}
         >
           Next
         </button>
