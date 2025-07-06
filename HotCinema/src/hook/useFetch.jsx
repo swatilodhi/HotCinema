@@ -5,7 +5,8 @@ import { useNavigate } from "react-router-dom";
 const useFetch = ({ apiPath, page, queryTerm = "" }) => {
     const [data, setData] = useState([]);
     const [totalPages, setTotalPages] = useState(1);
-    const apiKey = `4f7b1fc43891c9dbe160c20bb8b2470e`;
+     const apiKey = `4f7b1fc43891c9dbe160c20bb8b2470e`;
+    
     const navigate = useNavigate();
     
     useEffect(() => {
